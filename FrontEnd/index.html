@@ -241,6 +241,12 @@
         </tr>
         </thead>
         <tbody id="itemTable">
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
         </tbody>
     </table>
 </div>
@@ -462,7 +468,66 @@
         });
     });
 
+    $("#btnDeleteCustomer").click(function () {
+        let customerId=$("#txtCustomerId").val();
+        $.ajax({
+            url:"http://localhost:8080/JavaEEPos/customer?CusID=" + customerId,
+            method: "DELETE",
+            // data: data,
+            success: function (res) {
+                console.log(res);
+                if (res.status == 200) {
+                    alert(res.message);
+                    loadAllCustomers();
+                } else if (res.status == 400) {
+                    alert(res.data);
+                } else {
+                    alert(res.data);
+                }
 
+            },
+            error: function (ob, status, t) {
+                console.log(ob);
+                console.log(status);
+                console.log(t);
+            }
+        });
+    });
+
+    $("#btnGetAllItem").click(function () {
+        loadAllItems();
+    });
+    loadAllItems();
+    function loadAllItems() {
+        $("#itemTable").empty();
+        $.ajax({
+            url: "http://localhost:8080/JavaEEPos/item?option=GETALL",
+            method: "GET",
+            // dataType:"json", // please convert the response into JSON
+            success: function (resp) {
+                for (const item of resp.data) {
+                    let row = `<tr><td>${item.I_Code}</td><td>${item.I_Name}</td><td>${item.I_Price}</td><td>${item.I_Qty}</td></tr>`;
+                    $("#itemTable").append(row);
+                }
+                bindItemClickEvents();
+            }
+        });
+    }
+
+    function bindItemClickEvents() {
+        $("#itemTable>tr").click(function () {
+            //Get values from the selected row
+            let code = $(this).children().eq(0).text();
+            let name = $(this).children().eq(1).text();
+            let price = $(this).children().eq(2).text();
+            let qty = $(this).children().eq(3).text();
+            //Set values to the text-fields
+            $("#txtItemCode").val(code);
+            $("#txtItemName").val(name);
+            $("#txtItemPrice").val(price);
+            $("#txtItemQty").val(qty);
+        });
+    }
 </script>
 </body>
 </html>

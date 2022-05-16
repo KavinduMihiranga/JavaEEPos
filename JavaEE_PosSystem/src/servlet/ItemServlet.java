@@ -1,0 +1,72 @@
+package servlet;
+
+import javax.annotation.Resource;
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObjectBuilder;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+@WebServlet(urlPatterns = "/item")
+public class ItemServlet extends HttpServlet {
+    @Resource(name = "java:comp/env/jdbc/pool")
+    DataSource ds;
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("Request Received from Item");
+        try {
+            String option = req.getParameter("option");
+            resp.setContentType("application/json");
+            Connection connection = ds.getConnection();
+            PrintWriter writer = resp.getWriter();
+
+            resp.addHeader("Access-Control-Allow-Origin", "*");
+
+
+            switch (option) {
+                case "SEARCH":
+                    //write the code for customer search
+
+                    break;
+                case "GETALL":
+                    ResultSet rst = connection.prepareStatement("select * from Item").executeQuery();
+                    JsonArrayBuilder arrayBuilder = Json.createArrayBuilder(); // json array
+                    while (rst.next()) {
+                        String code = rst.getString(1);
+                        String name = rst.getString(2);
+                        double price = rst.getDouble(3);
+                        int qty = rst.getInt(4);
+
+                        JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+                        objectBuilder.add("I_Code", code);
+                        objectBuilder.add("I_Name", name);
+                        objectBuilder.add("I_Price", price);
+                        objectBuilder.add("I_Qty", qty);
+                        arrayBuilder.add(objectBuilder.build());
+                    }
+
+                    JsonObjectBuilder response = Json.createObjectBuilder();
+                    response.add("status", 200);
+                    response.add("message", "Done");
+                    response.add("data", arrayBuilder.build());
+                    writer.print(response.build());
+                    break;
+            }
+            connection.close();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+}
