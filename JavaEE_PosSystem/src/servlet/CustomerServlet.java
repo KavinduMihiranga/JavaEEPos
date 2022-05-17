@@ -1,6 +1,6 @@
 package servlet;
 
-import org.apache.commons.dbcp2.BasicDataSource;
+//import org.apache.commons.dbcp2.BasicDataSource;
 
 import javax.annotation.Resource;
 import javax.json.*;
@@ -74,10 +74,10 @@ public class CustomerServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String customerID = req.getParameter("C_Id");
-        String customerName = req.getParameter("C_Name");
-        String customerAddress = req.getParameter("C_Address");
-        String customerPhoneNo = req.getParameter("C_PhoneNo");
+        String customerID = req.getParameter("customerId");
+        String customerName = req.getParameter("customerName");
+        String customerAddress = req.getParameter("customerAddress");
+        String customerPhoneNo = req.getParameter("customerPhoneNo");
 
         resp.addHeader("Access-Control-Allow-Origin", "*");
 
@@ -94,7 +94,7 @@ public class CustomerServlet extends HttpServlet {
 
             if (pstm.executeUpdate()>0){
                 JsonObjectBuilder response = Json.createObjectBuilder();
-                resp.setStatus(HttpServletResponse.SC_OK);//201
+                resp.setStatus(HttpServletResponse.SC_CREATED);//201
                 response.add("status", 200);
                 response.add("message", "Successfully Added");
                 response.add("data", "");
@@ -154,8 +154,55 @@ public class CustomerServlet extends HttpServlet {
     }
 
     @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        JsonReader reader = Json.createReader(req.getReader());
+        JsonObject jsonObject = reader.readObject();
+        String c_id = jsonObject.getString("C_Id");
+        String c_name = jsonObject.getString("C_name");
+        String c_address = jsonObject.getString("C_Address");
+        String c_phoneNo = jsonObject.getString("C_PhoneNo");
+        PrintWriter writer = resp.getWriter();
+        resp.setContentType("application/json");
+
+//        resp.addHeader("Access-Control-Allow-Origin","*");
+        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:63342");
+
+
+        try {
+            Connection connection = ds.getConnection();
+            PreparedStatement pstm = connection.prepareStatement("Update Customer set C_Name=?,C_Address=?,C_PhoneNo=? where C_Id=?");
+            pstm.setObject(1, c_id);
+            pstm.setObject(2, c_name);
+            pstm.setObject(3, c_address);
+            pstm.setObject(4, c_id);
+            if (pstm.executeUpdate() > 0) {
+                JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+                objectBuilder.add("status", 200);
+                objectBuilder.add("message", "Successfully Updated");
+                objectBuilder.add("data", "");
+                writer.print(objectBuilder.build());
+            } else {
+                JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+                objectBuilder.add("status", 400);
+                objectBuilder.add("message", "Update Failed");
+                objectBuilder.add("data", "");
+                writer.print(objectBuilder.build());
+            }
+            connection.close();
+        } catch (SQLException throwables) {
+            JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+            objectBuilder.add("status", 500);
+            objectBuilder.add("message", "Update Failed");
+            objectBuilder.add("data", throwables.getLocalizedMessage());
+            throwables.printStackTrace();
+        }
+    }
+
+    @Override
     protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.addHeader("Access-Control-Allow-Origin", "*");
-        resp.addHeader("Access-Control-Allow-Methods", "DELETE");
+//        resp.addHeader("Access-Control-Allow-Origin", "*");
+//        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:63342");
+//        resp.addHeader("Access-Control-Allow-Methods", "DELETE,PUT");
+//        resp.addHeader("Access-Control-Allow-Headers", "Content-Type");
     }
 }

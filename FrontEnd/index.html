@@ -135,25 +135,25 @@
             <form id="customerForm">
                 <div class="mb-3 col-6">
                     <label class="form-label" for="txtCustomerId">Customer Id</label>
-                    <input class="form-control" id="txtCustomerId" placeholder="input Customer Id" type="text">
+                    <input class="form-control" id="txtCustomerId" name="customerId" placeholder="input Customer Id" type="text">
                     <p><small class="text-danger pl-1" id="errorId"></small></p>
                 </div>
                 <div class="mb-3 col-6">
                     <label class="form-label" for="txtCustomerName">Customer Name</label>
-                    <input class="form-control" id="txtCustomerName" placeholder="input Customer Name" type="text">
+                    <input class="form-control" id="txtCustomerName" name="customerName" placeholder="input Customer Name" type="text">
                     <p><small class="text-danger pl-1" id="errorName"></small></p>
 
                 </div>
                 <div class="mb-3 col-6">
                     <label class="form-label" for="txtCustomerAddress">Customer Address</label>
-                    <input class="form-control" id="txtCustomerAddress" placeholder="input Customer Address"
+                    <input class="form-control" id="txtCustomerAddress" name="customerAddress" placeholder="input Customer Address"
                            type="text">
                     <p><small class="text-danger pl-1" id="errorAddress"></small></p>
 
                 </div>
                 <div class="mb-3 col-6">
                     <label class="form-label" for="txtCustomerTP">Customer PhoneNo</label>
-                    <input class="form-control" id="txtCustomerTP" placeholder="input Customer Salary" type="text">
+                    <input class="form-control" id="txtCustomerTP" name="customerPhoneNo" placeholder="input Customer PhoneNo" type="text">
                     <p><small class="text-danger pl-1" id="errorTp"></small></p>
 
                 </div>
@@ -202,25 +202,25 @@
             <form id="itemForm">
                 <div class="mb-3 col-6">
                     <label class="form-label" for="txtItemCode">Item Code</label>
-                    <input class="form-control" id="txtItemCode" placeholder="input Item Code" type="text">
+                    <input class="form-control" id="txtItemCode" name="itemCode" placeholder="input Item Code" type="text">
                     <p><small class="text-danger pl-1" id="errorCode"></small></p>
 
                 </div>
                 <div class="mb-3 col-6">
                     <label class="form-label" for="txtItemName">Item Name</label>
-                    <input class="form-control" id="txtItemName" placeholder="input Item Name" type="text">
+                    <input class="form-control" id="txtItemName" name="itemName" placeholder="input Item Name" type="text">
                     <p><small class="text-danger pl-1" id="errorItemName"></small></p>
 
                 </div>
                 <div class="mb-3 col-6">
                     <label class="form-label" for="txtItemPrice">Item Price</label>
-                    <input class="form-control" id="txtItemPrice" placeholder="input Item Price" type="text">
+                    <input class="form-control" id="txtItemPrice" name="itemPice" placeholder="input Item Price" type="text">
                     <p><small class="text-danger pl-1" id="errorPrice"></small></p>
 
                 </div>
                 <div class="mb-3 col-6">
                     <label class="form-label" for="txtItemQty">Item Qty</label>
-                    <input class="form-control" id="txtItemQty" placeholder="input Item Qty" type="text">
+                    <input class="form-control" id="txtItemQty" name="itemQty" placeholder="input Item Qty" type="text">
                     <p><small class="text-danger pl-1" id="errorQty"></small></p>
 
                 </div>
@@ -261,7 +261,7 @@
             <label class="shadow bg-info">Invoice Detail</label>
             <div class="col-md-6">
                 <label class="form-label" for="txtOrderId">Order Id:</label>
-                <input class="form-control" id="txtOrderId" type="text">
+                <input class="form-control" id="txtOrderId" name="orderId" type="text">
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="txtOrderDate">Date</label>
@@ -269,15 +269,15 @@
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="txtOrderCustomer">Customer Name</label>
-                <input class="form-control" id="txtOrderCustomer" type="text">
+                <input class="form-control" id="txtOrderCustomer" name="orderCustomerName" type="text">
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="txtOrderCustomerId">Customer Id</label>
-                <input class="form-control" id="txtOrderCustomerId" type="text">
+                <input class="form-control" id="txtOrderCustomerId" name="orderCustomerId" type="text">
             </div>
             <div class="col-12">
                 <label class="form-label" for="txtOrderCustomerAddress">Address</label>
-                <input class="form-control" id="txtOrderCustomerAddress" type="text">
+                <input class="form-control" id="txtOrderCustomerAddress" name="orderCustomerAddress" type="text">
             </div>
         </form>
 
@@ -287,27 +287,27 @@
             <label class="shadow bg-info">Item Select</label>
             <div class="col-md-6">
                 <label class="form-label" for="txtOrderItemCodes">Item Code:</label>
-                <input class="form-control" id="txtOrderItemCodes" type="text">
+                <input class="form-control" id="txtOrderItemCodes" name="orderItemCode" type="text">
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="txtOrderItemSellName">Item Name</label>
-                <input class="form-control" id="txtOrderItemSellName" type="text">
+                <input class="form-control" id="txtOrderItemSellName" name="orderItemName" type="text">
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="txtOrderQuantity">Order Quantity</label>
-                <input class="form-control" id="txtOrderQuantity" type="text">
+                <input class="form-control" id="txtOrderQuantity" name="orderQty" type="text">
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="txtQuantityOnHand">Quantity On Hand</label>
-                <input class="form-control" id="txtQuantityOnHand" type="text">
+                <input class="form-control" id="txtQuantityOnHand" name="orderQtyOnHand" type="text">
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="txtItemSellPrice">Item Price</label>
-                <input class="form-control" id="txtItemSellPrice" type="text">
+                <input class="form-control" id="txtItemSellPrice" name="itemSellPrice" type="text">
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="txtItemSellDiscount">Item Discount</label>
-                <input class="form-control" id="txtItemSellDiscount" type="text">
+                <input class="form-control" id="txtItemSellDiscount" name="itemSellDiscount" type="text">
             </div>
             <div class="col-6 mt-5">
                 <button class="btn btn-outline-secondary" id="btnOrderAddItem" type="button">Add Item</button>
@@ -494,6 +494,34 @@
         });
     });
 
+    $("#btnUpdateCustomer").click(function () {
+        var cusOb={
+            id:$("#txtCustomerId").val(),
+            name:$("#txtCustomerName").val(),
+            address:$("#txtCustomerAddress").val(),
+            phone:$("#txtCustomerTP").val(),
+        }
+        $.ajax({
+            url:"http://localhost:8080/JavaEEPos/customer",
+            method:"PUT",
+            contentType:"application/json",
+            data:JSON.stringify(cusOb),
+            success:function (res) {
+                if (res.status==200){
+                    alert(res.message);
+                    loadAllCustomers();
+                }else if (res.status==400){
+                    alert(res.data)
+                }else {
+                    alert(res.data);
+                }
+            },
+            error:function (ob,errorStus) {
+                console.log(ob);
+            }
+        });
+    });
+
     $("#btnGetAllItem").click(function () {
         loadAllItems();
     });
@@ -528,6 +556,27 @@
             $("#txtItemQty").val(qty);
         });
     }
+    $("#btnAddItem").click(function () {
+        var data=$("#itemForm").serialize();
+        $.ajax({
+            url: "http://localhost:8080/JavaEEPos/item",
+            method: "POST",
+            data:data,
+            success:function (res) {
+                if (res.status==200){
+                    alert(res.message);
+                    loadAllItems();
+                }else {
+                    alert(res.data)
+                }
+            },
+            error:function (ob,textStatus,error) {
+                console.log(ob);
+                console.log(textStatus);
+                console.log(error);
+            }
+        });
+    });
 </script>
 </body>
 </html>

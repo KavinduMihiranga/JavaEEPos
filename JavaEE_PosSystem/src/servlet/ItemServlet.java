@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -65,6 +66,47 @@ public class ItemServlet extends HttpServlet {
             connection.close();
 
         } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String itemCode = req.getParameter("itemCode");
+        String itemName = req.getParameter("itemName");
+        String itemPrice = req.getParameter("itemPrice");
+        String itemQty = req.getParameter("itemQty");
+        resp.addHeader("Access-Control-Allow-Origin", "*");
+
+        PrintWriter writer = resp.getWriter();
+        resp.setContentType("application/json");
+
+        try {
+            Connection connection = ds.getConnection();
+            PreparedStatement pstm = connection.prepareStatement("Insert into Item values(?,?,?,?)");
+            pstm.setObject(1,itemCode);
+            pstm.setObject(2,itemName);
+            pstm.setObject(3,itemPrice);
+            pstm.setObject(4,itemQty);
+
+            if (pstm.executeUpdate()>0){
+                JsonObjectBuilder response = Json.createObjectBuilder();
+                resp.setStatus(HttpServletResponse.SC_CREATED);//201
+                response.add("status", 200);
+                response.add("message", "Successfully Added");
+                response.add("data", "");
+                writer.print(response.build());
+            }
+            connection.close();
+
+        } catch (SQLException throwables) {
+            JsonObjectBuilder response = Json.createObjectBuilder();
+            response.add("status", 400);
+            response.add("message", "Error");
+            response.add("data", throwables.getLocalizedMessage());
+            writer.print(response.build());
+            resp.setStatus(HttpServletResponse.SC_OK); //200
             throwables.printStackTrace();
         }
 
