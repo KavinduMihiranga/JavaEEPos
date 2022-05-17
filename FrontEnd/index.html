@@ -265,7 +265,7 @@
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="txtOrderDate">Date</label>
-                <input class="form-control" id="txtOrderDate" name="date" type="date">
+                <input class="form-control" id="txtOrderDate" name="orderDate" type="date">
             </div>
             <div class="col-md-6">
                 <label class="form-label" for="txtOrderCustomer">Customer Name</label>
@@ -283,7 +283,7 @@
 
         <br><br>
 
-        <form class="row g-3 col-4 mx-5 ">
+        <form class="row g-3 col-4 mx-5 "id="itemOrderForm">
             <label class="shadow bg-info">Item Select</label>
             <div class="col-md-6">
                 <label class="form-label" for="txtOrderItemCodes">Item Code:</label>
@@ -414,6 +414,7 @@
     loadAllCustomers();
 
     //Methods
+    //Customer
     function loadAllCustomers() {
         $("#custTable").empty();
         $.ajax({
@@ -522,6 +523,7 @@
         });
     });
 
+    //Item
     $("#btnGetAllItem").click(function () {
         loadAllItems();
     });
@@ -630,6 +632,32 @@
             }
         })
     });
+
+    //Order
+
+    $("#btnOrderAddItem").click(function () {
+        var data=$("#orderForm").serialize();
+        $.ajax({
+            url: "http://localhost:8080/JavaEEPos/order",
+            method: "POST",
+            data:data,
+            success:function (res) {
+                if (res.status==200){
+                    alert(res.message);
+                    loadAllItems();
+                }else {
+                    alert(res.data)
+                }
+            },
+            error:function (ob,textStatus,error) {
+                console.log(ob);
+                console.log(textStatus);
+                console.log(error);
+            }
+        })
+    })
+
+
 </script>
 </body>
 </html>
