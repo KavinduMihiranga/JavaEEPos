@@ -115,7 +115,7 @@ public class CustomerServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String c_id = req.getParameter("C_Id");
+        String c_id = req.getParameter("customerId");
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
 
@@ -123,7 +123,7 @@ public class CustomerServlet extends HttpServlet {
 
         try {
             Connection connection = ds.getConnection();
-            PreparedStatement pstm = connection.prepareStatement("Delete from Customer where id=?");
+            PreparedStatement pstm = connection.prepareStatement("Delete from Customer where C_Id=?");
             pstm.setObject(1, c_id);
 
             if (pstm.executeUpdate() > 0) {
@@ -200,9 +200,9 @@ public class CustomerServlet extends HttpServlet {
 
     @Override
     protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        resp.addHeader("Access-Control-Allow-Origin", "*");
+        resp.addHeader("Access-Control-Allow-Origin", "*");
 //        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:63342");
-//        resp.addHeader("Access-Control-Allow-Methods", "DELETE,PUT");
+        resp.addHeader("Access-Control-Allow-Methods", "DELETE,PUT");
 //        resp.addHeader("Access-Control-Allow-Headers", "Content-Type");
     }
 }

@@ -214,7 +214,7 @@
                 </div>
                 <div class="mb-3 col-6">
                     <label class="form-label" for="txtItemPrice">Item Price</label>
-                    <input class="form-control" id="txtItemPrice" name="itemPice" placeholder="input Item Price" type="text">
+                    <input class="form-control" id="txtItemPrice" name="itemPrice" placeholder="input Item Price" type="text">
                     <p><small class="text-danger pl-1" id="errorPrice"></small></p>
 
                 </div>
@@ -471,7 +471,7 @@
     $("#btnDeleteCustomer").click(function () {
         let customerId=$("#txtCustomerId").val();
         $.ajax({
-            url:"http://localhost:8080/JavaEEPos/customer?CusID=" + customerId,
+            url:"http://localhost:8080/JavaEEPos/customer?customerId=" + customerId,
             method: "DELETE",
             // data: data,
             success: function (res) {
@@ -576,6 +576,31 @@
                 console.log(error);
             }
         });
+    });
+
+    $("#btnDeleteItem").click(function () {
+        let itemCode=$("#txtItemCode").val();
+        $.ajax({
+            url:"http://localhost:8080/JavaEEPos/item?itemCode=" + itemCode,
+            method:"DELETE",
+            // data:data,
+            success:function (res) {
+                console.log(res);
+                if (res.status==200){
+                    alert(res.message);
+                    loadAllItems();
+                }else if (res.status==400){
+                    alert(res.data)
+                }else {
+                    alert(res.data)
+                }
+            },
+            error:function (ob,status,t) {
+                console.log(ob);
+                console.log(status);
+                console.log(t);
+            }
+        })
     });
 </script>
 </body>
