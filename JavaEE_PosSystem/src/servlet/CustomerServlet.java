@@ -157,24 +157,24 @@ public class CustomerServlet extends HttpServlet {
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JsonReader reader = Json.createReader(req.getReader());
         JsonObject jsonObject = reader.readObject();
-        String c_id = jsonObject.getString("C_Id");
-        String c_name = jsonObject.getString("C_name");
-        String c_address = jsonObject.getString("C_Address");
-        String c_phoneNo = jsonObject.getString("C_PhoneNo");
+        String customerId = jsonObject.getString("customerId");
+        String customerName = jsonObject.getString("customerName");
+        String customerAddress = jsonObject.getString("customerAddress");
+        String customerPhoneNo = jsonObject.getString("customerPhoneNo");
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
 
-//        resp.addHeader("Access-Control-Allow-Origin","*");
-        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:63342");
+        resp.addHeader("Access-Control-Allow-Origin","*");
+//        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:63342");
 
 
         try {
             Connection connection = ds.getConnection();
             PreparedStatement pstm = connection.prepareStatement("Update Customer set C_Name=?,C_Address=?,C_PhoneNo=? where C_Id=?");
-            pstm.setObject(1, c_id);
-            pstm.setObject(2, c_name);
-            pstm.setObject(3, c_address);
-            pstm.setObject(4, c_id);
+            pstm.setObject(1, customerName);
+            pstm.setObject(2, customerAddress);
+            pstm.setObject(3, customerPhoneNo);
+            pstm.setObject(4, customerId);
             if (pstm.executeUpdate() > 0) {
                 JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
                 objectBuilder.add("status", 200);
@@ -194,7 +194,7 @@ public class CustomerServlet extends HttpServlet {
             objectBuilder.add("status", 500);
             objectBuilder.add("message", "Update Failed");
             objectBuilder.add("data", throwables.getLocalizedMessage());
-            throwables.printStackTrace();
+            writer.print(objectBuilder.build());
         }
     }
 
@@ -203,6 +203,6 @@ public class CustomerServlet extends HttpServlet {
         resp.addHeader("Access-Control-Allow-Origin", "*");
 //        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:63342");
         resp.addHeader("Access-Control-Allow-Methods", "DELETE,PUT");
-//        resp.addHeader("Access-Control-Allow-Headers", "Content-Type");
+        resp.addHeader("Access-Control-Allow-Headers", "Content-Type");
     }
 }

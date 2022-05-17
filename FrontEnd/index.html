@@ -496,10 +496,10 @@
 
     $("#btnUpdateCustomer").click(function () {
         var cusOb={
-            id:$("#txtCustomerId").val(),
-            name:$("#txtCustomerName").val(),
-            address:$("#txtCustomerAddress").val(),
-            phone:$("#txtCustomerTP").val(),
+            customerId:$("#txtCustomerId").val(),
+            customerName:$("#txtCustomerName").val(),
+            customerAddress:$("#txtCustomerAddress").val(),
+            customerPhoneNo:$("#txtCustomerTP").val()
         }
         $.ajax({
             url:"http://localhost:8080/JavaEEPos/customer",
@@ -511,7 +511,7 @@
                     alert(res.message);
                     loadAllCustomers();
                 }else if (res.status==400){
-                    alert(res.data)
+                    alert(res.message)
                 }else {
                     alert(res.data);
                 }
@@ -599,6 +599,34 @@
                 console.log(ob);
                 console.log(status);
                 console.log(t);
+            }
+        })
+    });
+
+    $("#btnUpdateItem").click(function () {
+        var itemOb={
+            itemCode:$("#txtItemCode").val(),
+            itemName:$("#txtItemName").val(),
+            itemPrice:$("#txtItemPrice").val(),
+            itemQty:$("#txtItemQty").val()
+        }
+        $.ajax({
+            url:"http://localhost:8080/JavaEEPos/item",
+            method:"PUT",
+            contentType: "application/json",
+            data:JSON.stringify(itemOb),
+            success:function (res) {
+                if (res.status==200){
+                    alert(res.message);
+                    loadAllItems();
+                }else if (res.status==400){
+                    alert(res.message);
+                }else {
+                    alert(res.data)
+                }
+            },
+            error:function (ob,errorStus) {
+                console.log(ob)
             }
         })
     });
