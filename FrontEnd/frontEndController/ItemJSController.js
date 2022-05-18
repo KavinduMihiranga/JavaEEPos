@@ -1,6 +1,81 @@
 
+// VALIDATION
+// var regExItemCode = /^(I00-)[0-9]{3,4}$/;
+var regExItemCode = /^(I-)[0-9]{3,4}$/;
 
-//Item
+$("#txtItemCode").keyup(function () {
+    let input = $("#txtItemCode").val();
+    if (regExItemCode.test(input)) {
+        $("#txtItemCode").css('border', '2px solid green');
+        $("#errorCode").text("");
+        $("#btnAddItem").prop("disabled", false);
+
+    } else {
+        $("#txtItemCode").css('border', '2px solid red');
+        $("#errorCode").text("Wrong format : I00-001");
+        $("#btnAddItem").prop("disabled", true);
+
+    }
+});
+
+var regExItemName = /^[a-zA-Z ]+$/;
+
+$("#txtItemName").keyup(function () {
+    let input = $("#txtItemName").val();
+    if (regExItemName.test(input)) {
+        $("#txtItemName").css('border', '2px solid green');
+        $("#errorItemName").text("");
+        $("#btnAddItem").prop("disabled", false);
+
+    } else {
+        $("#txtItemName").css('border', '2px solid red');
+        $("#errorItemName").text("Wrong format : Type Item Name");
+        $("#btnAddItem").prop("disabled", true);
+
+    }
+});
+
+var regExItemPrice = /^\d{0,8}(\.\d{1,2})?$/;
+
+$("#txtItemPrice").keyup(function () {
+    let input = $("#txtItemPrice").val();
+    if (regExItemPrice.test(input)) {
+        $("#txtItemPrice").css('border', '2px solid green');
+        $("#errorPrice").text("");
+        $("#btnAddItem").prop("disabled", false);
+
+    } else {
+        $("#txtItemPrice").css('border', '2px solid red');
+        $("#errorPrice").text("Wrong format : Type Item Price");
+        $("#btnAddItem").prop("disabled", true);
+
+    }
+});
+
+var regExItemQty = /^\d{0,8}(\.\d{1,3})?$/;
+
+$("#txtItemQty").keyup(function () {
+    let input = $("#txtItemQty").val();
+    if (regExItemQty.test(input)) {
+        $("#txtItemQty").css('border', '2px solid green');
+        $("#errorQty").text("");
+        $("#btnAddItem").prop("disabled", false);
+
+    } else {
+        $("#txtItemQty").css('border', '2px solid red');
+        $("#errorQty").text("Wrong format : Type Item Qty");
+        $("#btnAddItem").prop("disabled", true);
+
+    }
+});
+
+$('#txtItemCode,#txtItemName,#txtItemPrice,#txtItemQty').on('keydown', function (eventObj) {
+    if (eventObj.key == "Tab") {
+        eventObj.preventDefault();
+    }
+});
+
+//Item Crud Operation
 $("#btnGetAllItem").click(function () {
     loadAllItems();
 });

@@ -128,9 +128,12 @@ $("#buttonAddOrder").click(function () {
 })
 
 
-$("#txtOrderCustomerId").keyup(function () {
-    OrderCustomerDetailFromCId();
-    alert("hello");
+$("#txtOrderCustomerId").keydown(function (event) {
+    if (event.key=="Enter"){
+        OrderCustomerDetailFromCId();
+        alert("hello");
+    }
+
 })
 
 function OrderCustomerDetailFromCId() {

@@ -1,4 +1,82 @@
+//validation
 
+
+// var regExCusID = /^(C00-)[0-9]{3,4}$/;
+ var regExCusID = /^(C-)[0-9]{3,4}$/;
+
+$("#txtCustomerId").keyup(function () {
+    let input = $("#txtCustomerId").val();
+    if (regExCusID.test(input)) {
+        $("#txtCustomerId").css('border', '2px solid green');
+        $("#errorId").text("");
+        $("#btnAddCustomer").prop("disabled", false);
+    } else {
+        $("#txtCustomerId").css('border', '2px solid red');
+        $("#errorId").text("Wrong format : C00-001");
+        $("#btnAddCustomer").prop("disabled", true);
+
+    }
+});
+
+var regExCusName = /^[a-zA-Z ]+$/;
+
+$("#txtCustomerName").keyup(function () {
+    let input = $("#txtCustomerName").val();
+    if (regExCusName.test(input)) {
+        $("#txtCustomerName").css('border', '2px solid green');
+        $("#errorName").text("");
+        $("#btnAddCustomer").prop("disabled", false);
+
+    } else {
+        $("#txtCustomerName").css('border', '2px solid red');
+        $("#errorName").text("Wrong format : Type Your Name");
+        $("#btnAddCustomer").prop("disabled", true);
+
+    }
+});
+
+var regExCusAddress = /^[A-Za-z0-9'\.\-\s\,]+$/;
+
+$("#txtCustomerAddress").keyup(function () {
+    let input = $("#txtCustomerAddress").val();
+    if (regExCusAddress.test(input)) {
+        $("#txtCustomerAddress").css('border', '2px solid green');
+        $("#errorAddress").text("");
+        $("#btnAddCustomer").prop("disabled", false);
+
+    } else {
+        $("#txtCustomerAddress").css('border', '2px solid red');
+        $("#errorAddress").text("Wrong format : Type Your Address");
+        $("#btnAddCustomer").prop("disabled", true);
+
+    }
+});
+
+var regExCusPhoneNo = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/;
+
+$("#txtCustomerTP").keyup(function () {
+    let input = $("#txtCustomerTP").val();
+    if (regExCusPhoneNo.test(input)) {
+        $("#txtCustomerTP").css('border', '2px solid green');
+        $("#errorTp").text("");
+        $("#btnAddCustomer").prop("disabled", false);
+
+    } else {
+        $("#txtCustomerTP").css('border', '2px solid red');
+        $("#errorTp").text("Wrong format : Type Your Phone No");
+        $("#btnAddCustomer").prop("disabled", true);
+
+    }
+});
+
+$('#txtCustomerId,#txtCustomerName,#txtCustomerAddress,#txtCustomerTP').on('keydown', function (eventObj) {
+    if (eventObj.key == "Tab") {
+        eventObj.preventDefault();
+    }
+});
+
+
+//Crud Operation
 $("#btnGetAllCustomer").click(function () {
     loadAllCustomers();
 });
