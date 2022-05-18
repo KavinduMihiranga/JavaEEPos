@@ -38,17 +38,23 @@ public class OrderServlet extends HttpServlet {
                     //
                     break;
                 case "GETALL":
-                    ResultSet rst = connection.prepareStatement(" select * from Item").executeQuery();
+                    ResultSet rst = connection.prepareStatement(" select * from OrderDetail").executeQuery();
                     JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
                     while (rst.next()){
                         String iCode = rst.getString(1);
                         String iName = rst.getString(2);
                         String iPrice = rst.getString(3);
+                        String iDiscount = rst.getString(4);
+                        String iQty = rst.getString(5);
+                        String iTotal = rst.getString(6);
 
                         JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
                         objectBuilder.add("O_ICode",iCode);
                         objectBuilder.add("O_IName",iName);
                         objectBuilder.add("O_IPrice",iPrice);
+                        objectBuilder.add("O_IDiscount",iDiscount);
+                        objectBuilder.add("O_IQty",iQty);
+                        objectBuilder.add("O_ITotal",iTotal);
                         arrayBuilder.add(objectBuilder.build());
                     }
                     JsonObjectBuilder response = Json.createObjectBuilder();
@@ -122,8 +128,6 @@ public class OrderServlet extends HttpServlet {
                     }
                     break;
                 case "OrderDetail":
-
-                    String odOId = req.getParameter("orderId");
                     String odOItemCode = req.getParameter("orderItemCode");
                     String odOrderItemName = req.getParameter("orderItemName");
                     String odItemSellPrice = req.getParameter("itemSellPrice");
@@ -135,14 +139,13 @@ public class OrderServlet extends HttpServlet {
 
                     try {
 
-                        PreparedStatement pstm = connection.prepareStatement("Insert into OrderDetail values(?,?,?,?,?,?,?)");
-                        pstm.setObject(1,odOId);
-                        pstm.setObject(2,odOItemCode);
-                        pstm.setObject(3,odOrderItemName);
-                        pstm.setObject(4,odItemSellPrice);
-                        pstm.setObject(5,odItemSellDiscount);
-                        pstm.setObject(6,odOrderQty);
-                        pstm.setObject(7,odIemSellTotalPrice);
+                        PreparedStatement pstm = connection.prepareStatement("Insert into OrderDetail values(?,?,?,?,?,?)");
+                        pstm.setObject(1,odOItemCode);
+                        pstm.setObject(2,odOrderItemName);
+                        pstm.setObject(3,odItemSellPrice);
+                        pstm.setObject(4,odItemSellDiscount);
+                        pstm.setObject(5,odOrderQty);
+                        pstm.setObject(6,odIemSellTotalPrice);
 
                         if (pstm.executeUpdate()>0){
                             JsonObjectBuilder response = Json.createObjectBuilder();
