@@ -29,7 +29,7 @@ public class ItemServlet extends HttpServlet {
             Connection connection = ds.getConnection();
             PrintWriter writer = resp.getWriter();
 
-            resp.addHeader("Access-Control-Allow-Origin", "*");
+//            resp.addHeader("Access-Control-Allow-Origin", "*");
 
 
             switch (option) {
@@ -75,7 +75,8 @@ public class ItemServlet extends HttpServlet {
         String itemName = req.getParameter("itemName");
         String itemPrice = req.getParameter("itemPrice");
         String itemQty = req.getParameter("itemQty");
-        resp.addHeader("Access-Control-Allow-Origin", "*");
+
+//        resp.addHeader("Access-Control-Allow-Origin", "*");
 
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
@@ -116,7 +117,7 @@ public class ItemServlet extends HttpServlet {
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
 
-        resp.addHeader("Access-Control-Allow-Origin", "*");
+//        resp.addHeader("Access-Control-Allow-Origin", "*");
 
         try {
             Connection connection = ds.getConnection();
@@ -161,7 +162,7 @@ public class ItemServlet extends HttpServlet {
         PrintWriter writer = resp.getWriter();
         resp.setContentType("application/json");
 
-        resp.addHeader("Access-Control-Allow-Origin", "*");
+//        resp.addHeader("Access-Control-Allow-Origin", "*");
 
         try {
             Connection connection = ds.getConnection();
@@ -195,12 +196,12 @@ public class ItemServlet extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.addHeader("Access-Control-Allow-Origin", "*");
-        resp.addHeader("Access-Control-Allow-Methods", "DELETE,PUT");
-        resp.addHeader("Access-Control-Allow-Headers", "Content-Type");
-
-    }
+//    @Override
+//    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        resp.addHeader("Access-Control-Allow-Origin", "*");
+//        resp.addHeader("Access-Control-Allow-Methods", "DELETE,PUT");
+//        resp.addHeader("Access-Control-Allow-Headers", "Content-Type");
+//
+//    }
 }
 

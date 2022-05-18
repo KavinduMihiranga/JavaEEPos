@@ -640,11 +640,32 @@
     //Order
 
     $("#btnOrderAddItem").click(function () {
-        var data=$("#orderForm").serialize();
+        // var data=$("#orderForm").serialize();
+        // $.ajax({
+        //     url: "http://localhost:8080/JavaEEPos/order?orderOption=POST",
+        //     method: "POST",
+        //     data:data,
+        //     success:function (res) {
+        //         if (res.status==200){
+        //             alert(res.message);
+        //             loadAllItems();
+        //         }else {
+        //             alert(res.data)
+        //         }
+        //     },
+        //     error:function (ob,textStatus,error) {
+        //         console.log(ob);
+        //         console.log(textStatus);
+        //         console.log(error);
+        //     }
+        // })
+        //
+
+        var orderDetailData=$("#itemOrderForm").serialize();
         $.ajax({
-            url: "http://localhost:8080/JavaEEPos/order?orderOption=POST",
+            url: "http://localhost:8080/JavaEEPos/order?orderOption=OrderDetail",
             method: "POST",
-            data:data,
+            data:orderDetailData,
             success:function (res) {
                 if (res.status==200){
                     alert(res.message);
@@ -659,7 +680,6 @@
                 console.log(error);
             }
         })
-
 
     })
 
@@ -702,11 +722,32 @@
     loadAllOrderDetail();
 
     $("#buttonAddOrder").click(function () {
-        var orderDetailData=$("#itemOrderForm").serialize();
+        // var orderDetailData=$("#itemOrderForm").serialize();
+        // $.ajax({
+        //     url: "http://localhost:8080/JavaEEPos/order?orderOption=OrderDetail",
+        //     method: "POST",
+        //     data:orderDetailData,
+        //     success:function (res) {
+        //         if (res.status==200){
+        //             alert(res.message);
+        //             loadAllItems();
+        //         }else {
+        //             alert(res.data)
+        //         }
+        //     },
+        //     error:function (ob,textStatus,error) {
+        //         console.log(ob);
+        //         console.log(textStatus);
+        //         console.log(error);
+        //     }
+        // })
+
+
+        var data=$("#orderForm").serialize();
         $.ajax({
-            url: "http://localhost:8080/JavaEEPos/order?orderOption=OrderDetail",
+            url: "http://localhost:8080/JavaEEPos/order?orderOption=POST",
             method: "POST",
-            data:orderDetailData,
+            data:data,
             success:function (res) {
                 if (res.status==200){
                     alert(res.message);
@@ -721,6 +762,8 @@
                 console.log(error);
             }
         })
+
+
     })
 
 

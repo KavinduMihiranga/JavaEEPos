@@ -31,7 +31,7 @@ public class OrderServlet extends HttpServlet {
             Connection connection = ds.getConnection();
             PrintWriter writer = resp.getWriter();
 
-            resp.addHeader("Access-Control-Allow-Origin", "*");
+//            resp.addHeader("Access-Control-Allow-Origin", "*");
 
             switch (option){
                 case "SEARCHCUSTOMER":
@@ -101,7 +101,7 @@ public class OrderServlet extends HttpServlet {
             Connection connection = ds.getConnection();
             PrintWriter writer = resp.getWriter();
 
-            resp.addHeader("Access-Control-Allow-Origin", "*");
+//            resp.addHeader("Access-Control-Allow-Origin", "*");
 
             switch (orderOption) {
                 case "POST":
@@ -249,11 +249,11 @@ public class OrderServlet extends HttpServlet {
 
     }
 
-    @Override
-    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.addHeader("Access-Control-Allow-Origin", "*");
-//        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:63342");
-        resp.addHeader("Access-Control-Allow-Methods", "POST,PUT");
-        resp.addHeader("Access-Control-Allow-Headers", "Content-Type");
-    }
+//    @Override
+//    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        resp.addHeader("Access-Control-Allow-Origin", "*");
+////        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:63342");
+//        resp.addHeader("Access-Control-Allow-Methods", "POST,PUT");
+//        resp.addHeader("Access-Control-Allow-Headers", "Content-Type");
+//    }
 }
