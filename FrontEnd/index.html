@@ -693,9 +693,9 @@
             $("#txtOrderItemCodes").val(o_ICode);
             $("#txtOrderItemSellName").val(o_IName);
             $("#txtItemSellPrice").val(o_IPrice);
-            $("#txtItemSellPrice").val(o_IDiscount);
-            $("#txtItemSellPrice").val(o_IQty);
-            $("#txtItemSellPrice").val(o_ITotal);
+            $("#txtItemSellDiscount").val(o_IDiscount);
+            $("#txtOrderQuantity").val(o_IQty);
+            $("#txtItemSellTotalPrice").val(o_ITotal);
 
         });
     }
@@ -722,6 +722,28 @@
             }
         })
     })
+
+
+    $("#txtOrderCustomerId").keyup(function () {
+        OrderCustomerDetailFromCId();
+        alert("hello");
+    })
+
+    function OrderCustomerDetailFromCId() {
+        $.ajax({
+            url:"http://localhost:8080/JavaEEPos/order?option=SEARCHCUSTOMER",
+            method:"GET",
+            // dataType:"Json",
+            success:function (resp) {
+                for (const orderCust of resp.data){
+                    let orderCustName=$(this.orderCustomerName);
+                    let orderCustAddress=$(this.orderCustomerAddress);
+                    $("#txtOrderCustomer").val(orderCustName);
+                    $("#txtOrderCustomerAddress").val(orderCustAddress);
+                }
+            }
+        })
+    }
 
 
 </script>

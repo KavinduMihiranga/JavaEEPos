@@ -34,8 +34,29 @@ public class OrderServlet extends HttpServlet {
             resp.addHeader("Access-Control-Allow-Origin", "*");
 
             switch (option){
-                case "SEARCH":
-                    //
+                case "SEARCHCUSTOMER":
+
+                    ResultSet rst1 = connection.prepareStatement("SELECT C_Name,C_Address from Customer where C_Id=?").executeQuery();
+                    JsonArrayBuilder arrayBuilder1=Json.createArrayBuilder();
+
+                    while (rst1.next()){
+                        String oCName = rst1.getString(1);
+                        String oCAddress = rst1.getString(2);
+                        String oCId = rst1.getString(3);
+
+                        JsonObjectBuilder objectBuilder=Json.createObjectBuilder();
+                        objectBuilder.add("orderCustomerName",oCName);
+                        objectBuilder.add("orderCustomerAddress",oCAddress);
+                        objectBuilder.add("orderCustomerId",oCId);
+                        arrayBuilder1.add(objectBuilder.build());
+
+                    }
+                    JsonObjectBuilder response1 = Json.createObjectBuilder();
+                    response1.add("status", 200);
+                    response1.add("message", "Done");
+                    response1.add("data", arrayBuilder1.build());
+                    writer.print(response1.build());
+
                     break;
                 case "GETALL":
                     ResultSet rst = connection.prepareStatement(" select * from OrderDetail").executeQuery();
