@@ -2,6 +2,7 @@ package servlet;
 
 import javax.annotation.Resource;
 import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObjectBuilder;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @WebServlet(urlPatterns = "/order")
@@ -36,9 +38,27 @@ public class OrderServlet extends HttpServlet {
                     //
                     break;
                 case "GETALL":
-                    connection.prepareStatement(" ");
+                    ResultSet rst = connection.prepareStatement(" select * from Item").executeQuery();
+                    JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+                    while (rst.next()){
+                        String iCode = rst.getString(1);
+                        String iName = rst.getString(2);
+                        String iPrice = rst.getString(3);
+
+                        JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+                        objectBuilder.add("O_ICode",iCode);
+                        objectBuilder.add("O_IName",iName);
+                        objectBuilder.add("O_IPrice",iPrice);
+                        arrayBuilder.add(objectBuilder.build());
+                    }
+                    JsonObjectBuilder response = Json.createObjectBuilder();
+                    response.add("status", 200);
+                    response.add("message", "Done");
+                    response.add("data", arrayBuilder.build());
+                    writer.print(response.build());
                     break;
             }
+            connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -47,6 +67,114 @@ public class OrderServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        try {
+            String orderOption = req.getParameter("orderOption");
+            resp.setContentType("application/json");
+            Connection connection = ds.getConnection();
+            PrintWriter writer = resp.getWriter();
+
+            resp.addHeader("Access-Control-Allow-Origin", "*");
+
+            switch (orderOption) {
+                case "POST":
+
+                    String orderId = req.getParameter("orderId");
+                    String orderDate = req.getParameter("orderDate");
+                    String orderCustomerName = req.getParameter("orderCustomerName");
+                    String orderCustomerId = req.getParameter("orderCustomerId");
+                    String orderCustomerAddress = req.getParameter("orderCustomerAddress");
+
+                    String itemCode = req.getParameter("orderItemCode");
+                    String orderItemName = req.getParameter("orderItemName");
+                    String orderQty = req.getParameter("orderQty");
+                    String orderQtyOnHand = req.getParameter("orderQtyOnHand");
+
+
+                    resp.setContentType("application/json");
+
+                    try {
+
+                        PreparedStatement pstm = connection.prepareStatement("Insert into `Order` values(?,?,?,?)");
+                        pstm.setObject(1,orderId);
+                        pstm.setObject(2,orderCustomerId);
+                        pstm.setObject(3,orderDate);
+                        pstm.setObject(4,orderQty);
+
+                        if (pstm.executeUpdate()>0){
+                            JsonObjectBuilder response = Json.createObjectBuilder();
+                            resp.setStatus(HttpServletResponse.SC_CREATED);//201
+                            response.add("status", 200);
+                            response.add("message", "Successfully Added");
+                            response.add("data", "");
+                            writer.print(response.build());
+                        }
+                        connection.close();
+
+                    } catch (SQLException throwables) {
+                        JsonObjectBuilder response = Json.createObjectBuilder();
+                        response.add("status", 400);
+                        response.add("message", "Error");
+                        response.add("data", throwables.getLocalizedMessage());
+                        writer.print(response.build());
+                        resp.setStatus(HttpServletResponse.SC_OK); //200
+                        throwables.printStackTrace();
+                    }
+                    break;
+                case "OrderDetail":
+
+                    String odOId = req.getParameter("orderId");
+                    String odOItemCode = req.getParameter("orderItemCode");
+                    String odOrderItemName = req.getParameter("orderItemName");
+                    String odItemSellPrice = req.getParameter("itemSellPrice");
+                    String odItemSellDiscount = req.getParameter("itemSellDiscount");
+                    String odOrderQty = req.getParameter("orderQty");
+                    String odIemSellTotalPrice = req.getParameter("itemSellTotalPrice");
+
+                    resp.setContentType("application/json");
+
+                    try {
+
+                        PreparedStatement pstm = connection.prepareStatement("Insert into OrderDetail values(?,?,?,?,?,?,?)");
+                        pstm.setObject(1,odOId);
+                        pstm.setObject(2,odOItemCode);
+                        pstm.setObject(3,odOrderItemName);
+                        pstm.setObject(4,odItemSellPrice);
+                        pstm.setObject(5,odItemSellDiscount);
+                        pstm.setObject(6,odOrderQty);
+                        pstm.setObject(7,odIemSellTotalPrice);
+
+                        if (pstm.executeUpdate()>0){
+                            JsonObjectBuilder response = Json.createObjectBuilder();
+                            resp.setStatus(HttpServletResponse.SC_CREATED);//201
+                            response.add("status", 200);
+                            response.add("message", "Successfully Added");
+                            response.add("data", "");
+                            writer.print(response.build());
+                        }
+                        connection.close();
+
+                    } catch (SQLException throwables) {
+                        JsonObjectBuilder response = Json.createObjectBuilder();
+                        response.add("status", 400);
+                        response.add("message", "Error");
+                        response.add("data", throwables.getLocalizedMessage());
+                        writer.print(response.build());
+                        resp.setStatus(HttpServletResponse.SC_OK); //200
+                        throwables.printStackTrace();
+                    }
+                    break;
+
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+
+     /*
+
 
         
         String orderId = req.getParameter("orderId");
@@ -92,6 +220,16 @@ public class OrderServlet extends HttpServlet {
             writer.print(response.build());
             resp.setStatus(HttpServletResponse.SC_OK); //200
             throwables.printStackTrace();
-        }
+        }*/
+
+
+    }
+
+    @Override
+    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.addHeader("Access-Control-Allow-Origin", "*");
+//        resp.addHeader("Access-Control-Allow-Origin", "http://localhost:63342");
+        resp.addHeader("Access-Control-Allow-Methods", "POST,PUT");
+        resp.addHeader("Access-Control-Allow-Headers", "Content-Type");
     }
 }

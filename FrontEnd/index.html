@@ -309,6 +309,10 @@
                 <label class="form-label" for="txtItemSellDiscount">Item Discount</label>
                 <input class="form-control" id="txtItemSellDiscount" name="itemSellDiscount" type="text">
             </div>
+            <div class="col-md-6">
+                <label class="form-label" for="txtItemSellTotalPrice">Item Total Price</label>
+                <input class="form-control" id="txtItemSellTotalPrice" name="itemSellTotalPrice" type="text">
+            </div>
             <div class="col-6 mt-5">
                 <button class="btn btn-outline-secondary" id="btnOrderAddItem" type="button">Add Item</button>
             </div>
@@ -638,7 +642,7 @@
     $("#btnOrderAddItem").click(function () {
         var data=$("#orderForm").serialize();
         $.ajax({
-            url: "http://localhost:8080/JavaEEPos/order",
+            url: "http://localhost:8080/JavaEEPos/order?orderOption=POST",
             method: "POST",
             data:data,
             success:function (res) {
@@ -655,8 +659,59 @@
                 console.log(error);
             }
         })
+
+        var orderDetailData=$("#itemOrderForm").serialize();
+        $.ajax({
+            url: "http://localhost:8080/JavaEEPos/order?orderOption=OrderDetail",
+            method: "POST",
+            data:orderDetailData,
+            success:function (res) {
+                if (res.status==200){
+                    alert(res.message);
+                    loadAllItems();
+                }else {
+                    alert(res.data)
+                }
+            },
+            error:function (ob,textStatus,error) {
+                console.log(ob);
+                console.log(textStatus);
+                console.log(error);
+            }
+        })
     })
 
+    function loadAllOrderDetail() {
+        $("#orderTable").empty();
+        $.ajax({
+            url: "http://localhost:8080/JavaEEPos/order?option=GETALL",
+            method: "GET",
+            // dataType:"json", // please convert the response into JSON
+            success: function (resp) {
+                for (const order of resp.data) {
+                    let row = `<tr><td>${order.O_ICode}</td><td>${order.O_IName}</td><td>${order.O_IPrice}</td></tr>`;
+                    $("#orderTable").append(row);
+                }
+                bindOrderClickEvents();
+            }
+        });
+    }
+
+    function bindOrderClickEvents() {
+        $("#orderTable>tr").click(function () {
+            //Get values from the selected row
+            let o_ICode = $(this).children().eq(0).text();
+            let o_IName = $(this).children().eq(1).text();
+            let o_IPrice = $(this).children().eq(2).text();
+
+            //Set values to the text-fields
+            $("#txtOrderItemCodes").val(o_ICode);
+            $("#txtOrderItemSellName").val(o_IName);
+            $("#txtItemSellPrice").val(o_IPrice);
+
+        });
+    }
+    loadAllOrderDetail();
 
 </script>
 </body>
