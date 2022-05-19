@@ -37,7 +37,28 @@ public class CustomerServlet extends HttpServlet {
 
             switch (option) {
                 case "SEARCH":
-                    //write the code for customer search
+                    ResultSet rst1 = connection.prepareStatement("SELECT C_Name,C_Address,C_PhoneNo from Customer where C_Id=?").executeQuery();
+                    JsonArrayBuilder arrayBuilder1=Json.createArrayBuilder();
+
+                    while (rst1.next()){
+                        String CName = rst1.getString(1);
+                        String CAddress = rst1.getString(2);
+                        String C_PhoneNo = rst1.getString(2);
+                        String CId = rst1.getString(3);
+
+                        JsonObjectBuilder objectBuilder=Json.createObjectBuilder();
+                        objectBuilder.add("customerName",CName);
+                        objectBuilder.add("customerAddress",CAddress);
+                        objectBuilder.add("customerPhoneNo",C_PhoneNo);
+                        objectBuilder.add("customerId",CId);
+                        arrayBuilder1.add(objectBuilder.build());
+
+                    }
+                    JsonObjectBuilder response1 = Json.createObjectBuilder();
+                    response1.add("status", 200);
+                    response1.add("message", "Done");
+                    response1.add("data", arrayBuilder1.build());
+                    writer.print(response1.build());
 
                     break;
                 case "GETALL":

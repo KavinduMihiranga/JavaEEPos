@@ -84,6 +84,29 @@ loadAllCustomers();
 
 //Methods
 //Customer
+$("#txtCustomerId").keydown(function (event) {
+    if (event.key=="Enter"){
+        customerTxtAdd();
+        alert("hello");
+    }
+})
+function customerTxtAdd() {
+    $.ajax({
+        url: "http://localhost:8080/JavaEEPos/customer?option=SEARCH",
+        method: "GET",
+        // dataType:"json", // please convert the response into JSON
+        success: function (resp) {
+            for (const customer of resp.data) {
+                let custName=$(this.CName);
+                let custAddress=$(this.CAddress);
+                let custPhoneNo=$(this.C_PhoneNo);
+                $("#txtOrderCustomer").val(custName);
+                $("#txtOrderCustomerAddress").val(custAddress);
+                $("#txtCustomerTP").val(custPhoneNo);
+            }
+        }
+    });
+}
 function loadAllCustomers() {
     $("#custTable").empty();
     $.ajax({

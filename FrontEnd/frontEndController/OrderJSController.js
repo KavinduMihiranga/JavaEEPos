@@ -131,7 +131,7 @@ $("#buttonAddOrder").click(function () {
 $("#txtOrderCustomerId").keydown(function (event) {
     if (event.key=="Enter"){
         OrderCustomerDetailFromCId();
-        alert("hello");
+
     }
 
 })
@@ -143,12 +143,57 @@ function OrderCustomerDetailFromCId() {
         // dataType:"Json",
         success:function (resp) {
             for (const orderCust of resp.data){
-                let orderCustName=$(this.orderCustomerName);
-                let orderCustAddress=$(this.orderCustomerAddress);
+                let orderCustId=$(orderCust.orderCustomerId);
+                let orderCustName=$(orderCust.orderCustomerName);
+                let orderCustAddress=$(orderCust.orderCustomerAddress);
+                let orderCustPhoneNo=$(orderCust.orderCustomerPhoneNo);
+
+                alert(orderCustName+"Cust"+orderCustAddress);
                 $("#txtOrderCustomer").val(orderCustName);
                 $("#txtOrderCustomerAddress").val(orderCustAddress);
+
+
+
             }
         }
     })
 }
+$("#txtOrderQuantity").keydown(function (event) {
+if (event.key=="Enter"){
+    labelFunction();
+}
+})
+$("#lblCash").keydown(function (event) {
+if (event.key=="Enter"){
+    lblCash();
+}
+})
 
+function labelFunction() {
+
+    let totalQty=parseInt($("#txtOrderQuantity").val());
+    parseInt($("#lblTotalQty").val(totalQty));
+
+}
+function lblCash() {
+    let totalPrice=parseFloat($("#lblTotalPrice").val());
+    let cash=parseFloat($("#lblCash").val());
+    parseFloat($("#lblBalance").val(cash-totalPrice));
+}
+$("#txtItemSellTotalPrice").keydown(function (event) {
+    if (event.key=="Enter"){
+        totalDiscountAndTotalPrice();
+    }
+
+})
+function totalDiscountAndTotalPrice() {
+    let totalDiscount=$("#txtOrderQuantity").val()*$("#txtItemSellDiscount").val();
+    let totalPrice=$("#txtOrderQuantity").val()*$("#txtItemSellPrice").val();
+    $("#lblTotalDiscount").val(totalDiscount);
+    $("#lblSubTotalPrice").val(totalPrice);
+
+    let lblTotal=$("#lblTotalPrice").val();
+    let lblDiscount=$("#lblTotalDiscount").val();
+    $("#lblTotalPrice").val(totalPrice-totalDiscount);
+
+}

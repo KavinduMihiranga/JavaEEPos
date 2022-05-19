@@ -35,18 +35,20 @@ public class OrderServlet extends HttpServlet {
 
             switch (option){
                 case "SEARCHCUSTOMER":
-
-                    ResultSet rst1 = connection.prepareStatement("SELECT C_Name,C_Address from Customer where C_Id=?").executeQuery();
+                    String id= req.getParameter("orderCustomerid");
+                    ResultSet rst1 = connection.prepareStatement("SELECT C_Name,C_Address,C_PhoneNo from Customer where C_Id=?").executeQuery();
                     JsonArrayBuilder arrayBuilder1=Json.createArrayBuilder();
 
                     while (rst1.next()){
                         String oCName = rst1.getString(1);
                         String oCAddress = rst1.getString(2);
-                        String oCId = rst1.getString(3);
+                        String oCPhoneNo = rst1.getString(3);
+                        String oCId = rst1.getString(4);
 
                         JsonObjectBuilder objectBuilder=Json.createObjectBuilder();
                         objectBuilder.add("orderCustomerName",oCName);
                         objectBuilder.add("orderCustomerAddress",oCAddress);
+                        objectBuilder.add("orderCustomerPhoneNo",oCPhoneNo);
                         objectBuilder.add("orderCustomerId",oCId);
                         arrayBuilder1.add(objectBuilder.build());
 
