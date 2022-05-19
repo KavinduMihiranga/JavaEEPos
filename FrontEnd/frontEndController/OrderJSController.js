@@ -1,4 +1,7 @@
 //Order
+$("#linkOrder").click(function () {
+    $("#orderTable").empty();
+})
 
 $("#btnOrderAddItem").click(function () {
     // var data=$("#orderForm").serialize();
@@ -34,6 +37,7 @@ $("#btnOrderAddItem").click(function () {
             }else {
                 alert(res.data)
             }
+            loadAllOrderDetail();
         },
         error:function (ob,textStatus,error) {
             console.log(ob);
@@ -83,6 +87,7 @@ function bindOrderClickEvents() {
 loadAllOrderDetail();
 
 $("#buttonAddOrder").click(function () {
+
     // var orderDetailData=$("#itemOrderForm").serialize();
     // $.ajax({
     //     url: "http://localhost:8080/JavaEEPos/order?orderOption=OrderDetail",
@@ -102,7 +107,7 @@ $("#buttonAddOrder").click(function () {
     //         console.log(error);
     //     }
     // })
-
+    $("#orderTable").empty();
 
     var data=$("#orderForm").serialize();
     $.ajax({
