@@ -1,3 +1,105 @@
+
+$('#txtOrderId').keydown(function (event) {
+    if (event.key == "Enter") {
+        $('#txtOrderDate').focus();
+    }
+});
+
+$('#txtOrderDate').keydown(function (event) {
+    if (event.key == "Enter") {
+        $('#txtOrderCustomer').focus();
+    }
+});
+
+$('#txtOrderCustomer').keydown(function (event) {
+    if (event.key == "Enter") {
+        $('#txtOrderCustomerId').focus();
+    }
+});
+
+$('#txtOrderCustomerId').keydown(function (event) {
+    if (event.key == "Enter") {
+        $('#txtOrderCustomerAddress').focus();
+
+    }
+});
+
+$('#txtOrderItemCodes').keydown(function (event) {
+    if (event.key == "Enter") {
+        $('#txtOrderItemSellName').focus();
+    }
+});
+
+$('#txtOrderItemSellName').keydown(function (event) {
+    if (event.key == "Enter") {
+        $('#txtOrderQuantity').focus();
+    }
+});
+
+$('#txtOrderQuantity').keydown(function (event) {
+    if (event.key == "Enter") {
+        $('#txtQuantityOnHand').focus();
+        qtyFunction();
+    }
+});
+
+$('#txtQuantityOnHand').keydown(function (event) {
+    if (event.key == "Enter") {
+        $('#txtItemSellPrice').focus();
+    }
+});
+
+$('#txtItemSellPrice').keydown(function (event) {
+    if (event.key == "Enter") {
+        $('#txtItemSellDiscount').focus();
+
+    }
+});
+$('#txtItemSellDiscount').keydown(function (event) {
+    if (event.key == "Enter") {
+       $("#txtItemSellTotalPrice").focus();
+
+    }
+});
+
+$('#txtItemSellTotalPrice').keydown(function (event) {
+    if (event.key == "Enter") {
+       loadAllOrderDetail();
+
+    }
+});
+
+
+$("#lblTotalPrice").keydown(function (event) {
+    if (event.key == "Enter") {
+        // saveOrderItem();
+
+        if (confirm("Do You Want To Add This Item..? ")) {
+
+            alert("Add Order Item Successfully.!");
+            saveOrderItem();
+
+        } else {
+            alert("Cancel Add Order Item !");
+        }
+    }
+})
+
+$('#lblCash').keydown(function (event) {
+    if (event.key == "Enter") {
+        if (confirm("Do You Want To Add This Order..? ")) {
+
+            alert("Add Order Successfully.!");
+
+        } else {
+            alert("Cancel Add Order !");
+        }
+        lblCash();
+
+    }
+});
+
+
 //Order
 $("#linkOrder").click(function () {
     $("#orderTable").empty();
@@ -163,18 +265,20 @@ function OrderCustomerDetailFromCId() {
         }
     })
 }
-$("#txtOrderQuantity").keydown(function (event) {
-if (event.key=="Enter"){
-    labelFunction();
-}
-})
-$("#lblCash").keydown(function (event) {
-if (event.key=="Enter"){
-    lblCash();
-}
-})
 
-function labelFunction() {
+// $("#txtOrderQuantity").keydown(function (event) {
+// if (event.key=="Enter"){
+//     labelFunction();
+// }
+// })
+
+// $("#lblCash").keydown(function (event) {
+// if (event.key=="Enter"){
+//     lblCash();
+// }
+// })
+
+function qtyFunction() {
 
     let totalQty=parseInt($("#txtOrderQuantity").val());
     parseInt($("#lblTotalQty").val(totalQty));
