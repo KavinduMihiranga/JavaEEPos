@@ -100,8 +100,9 @@ $("#txtCustomerId").keydown(function (event) {
     }
 })
 function customerTxtAdd() {
+    let customerId=$("#txtCustomerId").val();
     $.ajax({
-        url: "http://localhost:8080/JavaEEPos/customer?option=SEARCH",
+        url: "http://localhost:8080/JavaEEPos/customer?option=SEARCH"+customerId,
         method: "GET",
         // dataType:"json", // please convert the response into JSON
         success: function (resp) {
