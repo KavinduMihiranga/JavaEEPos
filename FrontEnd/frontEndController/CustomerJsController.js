@@ -1,8 +1,8 @@
 //validation
 
 
-// var regExCusID = /^(C00-)[0-9]{3,4}$/;
- var regExCusID = /^(C-)[0-9]{3,4}$/;
+var regExCusID = /^(C00-)[0-9]{3,4}$/;
+//  var regExCusID = /^(C-)[0-9]{3,4}$/;
 $("#txtCustomerId").keyup(function () {
     let input = $("#txtCustomerId").val();
     if (regExCusID.test(input)) {

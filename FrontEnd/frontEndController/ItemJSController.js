@@ -1,15 +1,13 @@
 
 // VALIDATION
+var regExItemCode = /^(I00-)[0-9]{3,4}$/;
 // var regExItemCode = /^(I00-)[0-9]{3,4}$/;
-var regExItemCode = /^(I-)[0-9]{3,4}$/;
-
 $("#txtItemCode").keyup(function () {
     let input = $("#txtItemCode").val();
     if (regExItemCode.test(input)) {
         $("#txtItemCode").css('border', '2px solid green');
         $("#errorCode").text("");
         $("#btnAddItem").prop("disabled", false);
-
     } else {
         $("#txtItemCode").css('border', '2px solid red');
         $("#errorCode").text("Wrong format : I00-001");
