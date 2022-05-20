@@ -76,6 +76,29 @@ $('#txtItemCode,#txtItemName,#txtItemPrice,#txtItemQty').on('keydown', function 
 });
 
 //Item Crud Operation
+$("#btnSearchItem").click(function () {
+searchItem();
+})
+function searchItem(){
+    $.ajax({
+        url: "http://localhost:8080/JavaEEPos/item?option=SEARCH",
+        method: "GET",
+        // dataType:"json", // please convert the response into JSON
+        success: function (resp) {
+            let iCode=$(resp.itemCode);
+            let iName=$(resp.itemName);
+            let iPrice=$(resp.itemPrice);
+            let iQty=$(resp.itemQty);
+
+
+            $("#txtItemCode").val(iCode);
+            $("#txtItemName").val(iName);
+            $("#txtItemPrice").val(iPrice);
+            $("#txtItemQty").val(iQty);
+        }
+    });
+}
+
 $("#btnGetAllItem").click(function () {
     loadAllItems();
 });

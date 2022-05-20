@@ -37,7 +37,8 @@ public class CustomerServlet extends HttpServlet {
 
             switch (option) {
                 case "SEARCH":
-                    ResultSet rst1 = connection.prepareStatement("SELECT C_Name,C_Address,C_PhoneNo from Customer where C_Id=?").executeQuery();
+                    String cid=req.getParameter("txtSearchCustomer");
+                    ResultSet rst1 = connection.prepareStatement("SELECT C_Name,C_Address,C_PhoneNo from Customer where C_Id='"+cid+"'").executeQuery();
                     JsonArrayBuilder arrayBuilder1=Json.createArrayBuilder();
 
                     while (rst1.next()){

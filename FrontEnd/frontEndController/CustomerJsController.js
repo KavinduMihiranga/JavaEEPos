@@ -3,7 +3,6 @@
 
 // var regExCusID = /^(C00-)[0-9]{3,4}$/;
  var regExCusID = /^(C-)[0-9]{3,4}$/;
-
 $("#txtCustomerId").keyup(function () {
     let input = $("#txtCustomerId").val();
     if (regExCusID.test(input)) {
@@ -77,6 +76,16 @@ $('#txtCustomerId,#txtCustomerName,#txtCustomerAddress,#txtCustomerTP').on('keyd
 
 
 //Crud Operation
+$("#txtCustomerSearchId").keyup(function (event) {
+    if (event=="Enter") {
+        customerTxtAdd();
+    }
+
+})
+$("#txtCustomerSearchId").click(function () {
+    customerTxtAdd();
+})
+
 $("#btnGetAllCustomer").click(function () {
     loadAllCustomers();
 });
@@ -85,7 +94,7 @@ loadAllCustomers();
 //Methods
 //Customer
 $("#txtCustomerId").keydown(function (event) {
-    if (event.key=="Enter"){
+    if (event.key=="ENTER"){
         customerTxtAdd();
         alert("hello");
     }
@@ -97,11 +106,13 @@ function customerTxtAdd() {
         // dataType:"json", // please convert the response into JSON
         success: function (resp) {
             for (const customer of resp.data) {
-                let custName=$(this.CName);
-                let custAddress=$(this.CAddress);
-                let custPhoneNo=$(this.C_PhoneNo);
-                $("#txtOrderCustomer").val(custName);
-                $("#txtOrderCustomerAddress").val(custAddress);
+                let custId=$(customer.CId);
+                let custName=$(customer.CName);
+                let custAddress=$(customer.CAddress);
+                let custPhoneNo=$(customer.C_PhoneNo);
+                $("#txtCustomerId").val(custId);
+                $("#txtCustomerName").val(custName);
+                $("#txtCustomerAddress").val(custAddress);
                 $("#txtCustomerTP").val(custPhoneNo);
             }
         }

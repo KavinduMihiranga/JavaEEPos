@@ -34,7 +34,29 @@ public class ItemServlet extends HttpServlet {
 
             switch (option) {
                 case "SEARCH":
-                    //write the code for customer search
+                    String iCode=req.getParameter("txtSearchItem");
+                    ResultSet rst1 = connection.prepareStatement("SELECT I_Name,I_Price,I_Qty from Item where I_Code='"+iCode+"'").executeQuery();
+                    JsonArrayBuilder arrayBuilder1=Json.createArrayBuilder();
+
+                    while (rst1.next()){
+                        String itName = rst1.getString(1);
+                        String itPrice = rst1.getString(2);
+                        String itQty = rst1.getString(2);
+                        String itCode = rst1.getString(3);
+
+                        JsonObjectBuilder objectBuilder=Json.createObjectBuilder();
+                        objectBuilder.add("itemName",itName);
+                        objectBuilder.add("itemPrice",itPrice);
+                        objectBuilder.add("itemQty",itQty);
+                        objectBuilder.add("itemCode",itCode);
+                        arrayBuilder1.add(objectBuilder.build());
+
+                    }
+                    JsonObjectBuilder response1 = Json.createObjectBuilder();
+                    response1.add("status", 200);
+                    response1.add("message", "Done");
+                    response1.add("data", arrayBuilder1.build());
+                    writer.print(response1.build());
 
                     break;
                 case "GETALL":
