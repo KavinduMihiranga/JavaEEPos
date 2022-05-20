@@ -20,6 +20,7 @@ $('#txtOrderCustomer').keydown(function (event) {
 $('#txtOrderCustomerId').keydown(function (event) {
     if (event.key == "Enter") {
         $('#txtOrderCustomerAddress').focus();
+        orderCustomerDetailFromCId();
 
     }
 });
@@ -27,6 +28,8 @@ $('#txtOrderCustomerId').keydown(function (event) {
 $('#txtOrderItemCodes').keydown(function (event) {
     if (event.key == "Enter") {
         $('#txtOrderItemSellName').focus();
+        orderItemDetailFormICode();
+        alert("Item");
     }
 });
 
@@ -64,7 +67,9 @@ $('#txtItemSellDiscount').keydown(function (event) {
 
 $('#txtItemSellTotalPrice').keydown(function (event) {
     if (event.key == "Enter") {
-       loadAllOrderDetail();
+        loadAllOrderDetail();
+        totalDiscountAndTotalPrice();
+        qtyFunction();
 
     }
 });
@@ -140,6 +145,9 @@ $("#btnOrderAddItem").click(function () {
                 alert(res.data)
             }
             loadAllOrderDetail();
+            totalDiscountAndTotalPrice();
+            qtyFunction();
+
         },
         error:function (ob,textStatus,error) {
             console.log(ob);
@@ -234,20 +242,47 @@ $("#buttonAddOrder").click(function () {
 
 })
 
-
-$("#txtOrderCustomerId").keydown(function (event) {
-    if (event.key=="Enter"){
-        OrderCustomerDetailFromCId();
-
-    }
-
+//
+// $("#txtOrderCustomerId").keydown(function (event) {
+//     if (event.key=="Enter"){
+//         OrderCustomerDetailFromCId();
+//
+//     }
+//
+// })
+$("#txtOrderItemCodes").click(function () {
+orderItemDetailFormICode();
 })
+function orderItemDetailFormICode() {
+    $.ajax({
+        url:"http://localhost:8080/JavaEEPos/order?option=SEARCHITEM",
+        method:"GET",
+        dataType:"data",
+        success:function (resp) {
+            alert("Item");
+            for (const orderItem of resp.data){
+                let orderICode=$(orderItem.orderItemCode);
+                let orderIName=$(orderItem.orderItemName);
+                let orderIQty=$(orderItem.orderQtyOnHand);
+                let orderIPrice=$(orderItem.itemSellPrice);
+                alert(orderIName+"Item"+orderIQty);
+                $("#txtQuantityOnHand").val(orderIName);
+                $("#txtOrderCustomer").val(orderIQty);
+                $("#txtItemSellPrice").val(orderIPrice);
+                $("#txtOrderItemCodes").val(orderICode);
 
-function OrderCustomerDetailFromCId() {
+
+
+            }
+        }
+    })
+}
+
+function orderCustomerDetailFromCId() {
     $.ajax({
         url:"http://localhost:8080/JavaEEPos/order?option=SEARCHCUSTOMER",
         method:"GET",
-        // dataType:"Json",
+        dataType:"data",
         success:function (resp) {
             for (const orderCust of resp.data){
                 let orderCustId=$(orderCust.orderCustomerId);
@@ -264,6 +299,7 @@ function OrderCustomerDetailFromCId() {
             }
         }
     })
+
 }
 
 // $("#txtOrderQuantity").keydown(function (event) {
